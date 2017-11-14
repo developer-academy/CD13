@@ -13,9 +13,27 @@ class ViewController: UIViewController {
     @IBOutlet weak var facesCollectionView: UICollectionView!
     
     let staff = [
-        (category: "Director", people: [""]),
-        (category: "Management", people: ["","",]),
-        (category: "Teachers", people: ["","","","",""])
+        (category: "Management", people: ["d_giorgio", "m_simon", "m_stefano"]),
+        (category: "Teachers", people: [
+            "t_danilo",
+            "t_dario",
+            "t_domenico",
+            "t_fabio",
+            "t_francesco-1",
+            "t_francesco",
+            "t_hind",
+            "t_luigi",
+            "t_luisa",
+            "t_mara",
+            "t_mario",
+            "t_max",
+            "t_pietro",
+            "t_roberta",
+            "t_stefania",
+            "t_stefano",
+            "t_tiago",
+            "t_wallace"
+        ])
     ];
     
     override func viewDidLoad() {
@@ -42,7 +60,11 @@ extension ViewController : UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "faceIdentifier", for: indexPath)
         
         if let faceCell = cell as? FaceCollectionViewCell {
-            faceCell.faceImageView.image = UIImage(named: "")
+            let imageName = staff[indexPath.section].people[indexPath.row]
+            faceCell.faceImageView.image = UIImage(named: imageName)
+            
+            faceCell.faceImageView.clipsToBounds = true
+            faceCell.faceImageView.layer.cornerRadius = faceCell.faceImageView.frame.width / 3
         }
         
         return cell
@@ -92,6 +114,7 @@ extension ViewController : UICollectionViewDelegateFlowLayout {
         let paddingSpace = (collectionViewMargin.left + collectionViewMargin.right) + collectionViewSpacing.betweenRows * numberOfItens
         
         let viewWidth = self.facesCollectionView.frame.size.width
+        
         let itemSize = (viewWidth - paddingSpace) / numberOfItens
         
         return CGSize(width: itemSize, height: itemSize)
