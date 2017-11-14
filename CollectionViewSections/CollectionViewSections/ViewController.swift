@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     
     let staff = [
         (category: "Management", people: ["d_giorgio", "m_simon", "m_stefano"]),
-        (category: "Teachers", people: [
+        (category: "Mentors", people: [
             "t_danilo",
             "t_dario",
             "t_domenico",
@@ -41,6 +41,11 @@ class ViewController: UIViewController {
         
         facesCollectionView.delegate = self
         facesCollectionView.dataSource = self
+        
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
     
 }
@@ -69,6 +74,18 @@ extension ViewController : UICollectionViewDataSource {
         
         return cell
     }
+    
+    // Header view
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerView", for: indexPath)
+        
+        if let facesHeaders = headerView as? FacesHeaderCollectionReusableView {
+            let title = staff[indexPath.section].category
+            facesHeaders.titleLabel.text = title
+        }
+        
+        return headerView
+    }
 }
 
 extension ViewController : UICollectionViewDelegate {
@@ -90,10 +107,10 @@ extension ViewController : UICollectionViewDelegateFlowLayout {
         return CGSize(width: viewWidth, height: 50)
     }
     
-    var collectionViewFooterSize : CGSize {
-        let viewWidth = self.view.frame.size.width
-        return CGSize(width: viewWidth, height: 25)
-    }
+//    var collectionViewFooterSize : CGSize {
+//        let viewWidth = self.view.frame.size.width
+//        return CGSize(width: viewWidth, height: 25)
+//    }
     
     var numberOfItens: CGFloat {
         var value: CGFloat = 2
@@ -142,8 +159,7 @@ extension ViewController : UICollectionViewDelegateFlowLayout {
     }
     
 //  Size of the footer view
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return collectionViewFooterSize
-    }
-    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+//        return collectionViewFooterSize
+//    }
 }
